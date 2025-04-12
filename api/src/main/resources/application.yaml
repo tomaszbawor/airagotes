@@ -2,10 +2,13 @@ spring:
   application:
     name: airagotes
   ai:
-    model:
-      chat: ollama
+    vectorstore:
+      qdrant:
+        host: 127.0.0.1
+        port: 6334
+        collection-name: notes
+        intialize-schema: true
     ollama:
-
       init:
         pull-model-strategy: when_missing
         embedding:
