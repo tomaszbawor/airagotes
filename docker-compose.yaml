@@ -1,0 +1,47 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.13.6
+    container_name: qdrant
+    restart: unless-stopped
+    volumes:
+      - ./docker_data/qdrant_data:/qdrant/storage
+    ports:
+      - "6334:6334"
+      - "6333:6333"
+    environment:
+      QDRANT__LOG_LEVEL: "INFO"
+
+  ollama:
+    image: ollama/ollama:0.6.5
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    environment:
+      # If you want to set GPU or other config
+      # OLLAMA_CUDA: "1"
+      OLLAMA_MODEL: "gemma3:4b,nomic-embed-text:latest"
+    volumes:
+      - ./docker_data/ollama_models:/root/.ollama
+      - ./docker/ollama-entrypoint.sh:/entrypoint.sh
+      - ./docker/zscaler.crt:/zscaler/zscaler.crt
+    entrypoint: ["./entrypoint.sh"]
+    deploy:
+      resources:
+        limits:
+          memory: 32G
+        reservations:
+          memory: 32G
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_API_BASE_URL=http://ollama:11434
+    volumes:
+      - ./docker_data/open-webui:/app/backend/data
+    depends_on:
+      - ollama
