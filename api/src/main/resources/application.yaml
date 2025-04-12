@@ -16,4 +16,3 @@ spring:
         options:
           model: gemma3:4b
 
-    
