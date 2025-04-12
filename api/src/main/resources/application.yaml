@@ -5,6 +5,12 @@ spring:
     model:
       chat: ollama
     ollama:
+
+      init:
+        pull-model-strategy: when_missing
+        embedding:
+          additional-models:
+            - "nomic-embed-text:latest"
       base-url: http://localhost:11434
       chat:
         options:

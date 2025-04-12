@@ -2,6 +2,7 @@ package sh.tbawor.airagotes
 
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.ollama.OllamaChatModel
+import org.springframework.ai.ollama.api.OllamaApi
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -10,9 +11,5 @@ class Application
 
 fun main(args: Array<String>) {
     runApplication<Application>(*args)
-
-    var m = OllamaChatModel.builder().build()
-    val res = m.call(Prompt("Hello"))
-    println(res)
 }
 
