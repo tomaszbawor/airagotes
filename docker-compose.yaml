@@ -1,5 +1,15 @@
 services:
-  qdrant:
+
+  backend-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ollama-server
+
+  qdrant-db:
     image: qdrant/qdrant:v1.13.6
     container_name: qdrant
     restart: unless-stopped
@@ -11,7 +21,7 @@ services:
     environment:
       QDRANT__LOG_LEVEL: "INFO"
 
-  ollama:
+  ollama-server:
     image: ollama/ollama:0.6.5
     container_name: ollama
     restart: unless-stopped
@@ -32,16 +42,3 @@ services:
           memory: 32G
         reservations:
           memory: 32G
-
-  open-webui:
-    image: ghcr.io/open-webui/open-webui:main
-    container_name: open-webui
-    restart: unless-stopped
-    ports:
-      - "3000:8080"
-    environment:
-      - OLLAMA_API_BASE_URL=http://ollama:11434
-    volumes:
-      - ./docker_data/open-webui:/app/backend/data
-    depends_on:
-      - ollama
