@@ -1,0 +1,10 @@
+spring: 
+  application:
+    name: airagotes
+  ai:
+    ollama:
+      chat:
+        options:
+          model: gemma3:4b
+
+    

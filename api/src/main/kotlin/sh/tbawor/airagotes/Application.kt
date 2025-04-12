@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class AiragotesApplication
+class Application
 
 fun main(args: Array<String>) {
-	runApplication<AiragotesApplication>(*args)
+    runApplication<AiragotesApplication>(*args)
 }
