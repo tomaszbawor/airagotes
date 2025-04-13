@@ -9,7 +9,7 @@ COPY . .
 RUN ./gradlew clean bootJar --no-daemon
 
 # ---- Stage 2: Create minimal runtime image ----
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21.0.6_7-jre-alpine
 
 # Set environment variables
 ENV JAVA_OPTS=""
