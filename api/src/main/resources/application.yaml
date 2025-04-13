@@ -7,7 +7,7 @@ spring:
         host: 127.0.0.1
         port: 6334
         collection-name: notes
-        intialize-schema: true
+        initialize-schema: on
     ollama:
       init:
         pull-model-strategy: when_missing
@@ -19,5 +19,5 @@ spring:
         options:
           model: gemma3:4b
 knowledgebase:
-  init: true
+  init: false
   folder: "/home/tomasz/Documents/ObsidianNotes"
