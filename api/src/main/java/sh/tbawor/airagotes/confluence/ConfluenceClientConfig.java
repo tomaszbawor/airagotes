@@ -36,11 +36,11 @@ public class ConfluenceClientConfig {
                 .build();
         return WebClient.builder().baseUrl(baseUrl)
                 .exchangeStrategies(exchangeStrategies)
-                .defaultHeaders(headers ->{
-                    headers.setBasicAuth(email, token) ;
-                    headers.setAccept(List.of(MediaType.APPLICATION_JSON)) ;
+                .defaultHeaders(headers -> {
+                    headers.setBasicAuth(email, token);
+                    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
                     headers.set("COOKIE", cookie);
-                } )
+                })
                 .build();
     }
 }

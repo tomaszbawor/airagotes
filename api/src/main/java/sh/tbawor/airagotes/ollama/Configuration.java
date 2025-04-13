@@ -14,33 +14,33 @@ import org.springframework.context.annotation.Bean;
 @org.springframework.context.annotation.Configuration
 public class Configuration {
 
-  @Bean
-  public OllamaApi ollamaApi() {
-    // TODO: Get From Properties
-    return new OllamaApi("http://localhost:11434");
-  }
+    @Bean
+    public OllamaApi ollamaApi() {
+        // TODO: Get From Properties
+        return new OllamaApi("http://localhost:11434");
+    }
 
-  @Bean
-  public EmbeddingModel embeddingModel(OllamaApi ollamaApi) {
-    OllamaOptions ollamaOptions = OllamaOptions.builder().model(OllamaModel.NOMIC_EMBED_TEXT).build();
-    return OllamaEmbeddingModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
-  }
+    @Bean
+    public EmbeddingModel embeddingModel(OllamaApi ollamaApi) {
+        OllamaOptions ollamaOptions = OllamaOptions.builder().model(OllamaModel.NOMIC_EMBED_TEXT).build();
+        return OllamaEmbeddingModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
+    }
 
-  @Bean
-  public OllamaChatModel chatModel(OllamaApi ollamaApi) {
-    OllamaOptions options = new OllamaOptions();
-    options.setModel("gemma3:4b");
-    options.setTemperature(0.3); // Low Temperature to improve consistency and avoid hallucinations
+    @Bean
+    public OllamaChatModel chatModel(OllamaApi ollamaApi) {
+        OllamaOptions options = new OllamaOptions();
+        options.setModel("gemma3:4b");
+        options.setTemperature(0.3); // Low Temperature to improve consistency and avoid hallucinations
 
-    return OllamaChatModel
-        .builder()
-        .ollamaApi(ollamaApi)
-        .defaultOptions(options).build();
+        return OllamaChatModel
+                .builder()
+                .ollamaApi(ollamaApi)
+                .defaultOptions(options).build();
 
-  }
+    }
 
-  @Bean
-  public ChatClient chatClient(ChatModel chatModel) {
-    return ChatClient.builder(chatModel).defaultAdvisors(new SimpleLoggerAdvisor()).build();
-  }
+    @Bean
+    public ChatClient chatClient(ChatModel chatModel) {
+        return ChatClient.builder(chatModel).defaultAdvisors(new SimpleLoggerAdvisor()).build();
+    }
 }

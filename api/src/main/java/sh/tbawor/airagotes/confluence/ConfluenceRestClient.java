@@ -18,7 +18,7 @@ public class ConfluenceRestClient {
     private final WebClient confluenceWebClient;
 
 
-    public ConfluenceRestClient(WebClient confluenceWebClient){
+    public ConfluenceRestClient(WebClient confluenceWebClient) {
         this.confluenceWebClient = confluenceWebClient;
     }
 

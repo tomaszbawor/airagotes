@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@ConditionalOnProperty(value = { "confluence.scrap" }, havingValue = "true")
+@ConditionalOnProperty(value = {"confluence.scrap"}, havingValue = "true")
 public class ConfluenceScrapper implements ApplicationRunner {
     private static final Logger log = LoggerFactory.getLogger(ConfluenceScrapper.class);
 
