@@ -1,6 +1,7 @@
 package sh.tbawor.airagotes.ollama;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.ollama.OllamaChatModel;
@@ -15,6 +16,7 @@ public class Configuration {
 
   @Bean
   public OllamaApi ollamaApi() {
+    // TODO: Get From Properties
     return new OllamaApi("http://localhost:11434");
   }
 
@@ -39,6 +41,6 @@ public class Configuration {
 
   @Bean
   public ChatClient chatClient(ChatModel chatModel) {
-    return ChatClient.create(chatModel);
+    return ChatClient.builder(chatModel).defaultAdvisors(new SimpleLoggerAdvisor()).build();
   }
 }

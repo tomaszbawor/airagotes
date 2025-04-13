@@ -65,6 +65,7 @@ public class RagController {
     Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
 
     // 6. Generate the response
+
     var response = chatClient.prompt(prompt).call();
 
     // 7. Return the response with some metadata
