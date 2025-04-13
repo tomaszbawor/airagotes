@@ -3,7 +3,6 @@ package sh.tbawor.airagotes.confluence;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -46,12 +45,13 @@ public class ConfluenceRestClient {
                 String plainText = Jsoup.parse(html).text();
 
                 pages.add(new ConfluencePage(id, title, plainText));
+                log.debug("Added page: {} - {}", title, id);
             }
 
             Map<String, Object> links = (Map<String, Object>) response.get("_links");
             nextUrl = links.get("next") != null ? (String) links.get("next") : null;
         }
-
+        log.info("Completed scraping {} Confluence pages from space {}", pages.size(), spaceKey);
         return pages;
     }
 }

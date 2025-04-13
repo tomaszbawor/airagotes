@@ -28,6 +28,17 @@ public class DocumentIngestionService {
     this.vectorStore = vectorStore;
   }
 
+
+  public void addDocumentsToVectorStore(List<Document> documents) {
+    if (documents == null || documents.isEmpty()) {
+      log.warn("No documents to add to vector store");
+      return;
+    }
+
+    log.info("Adding {} documents to vector store", documents.size());
+    vectorStore.add(documents);
+  }
+
   /**
    * Ingests markdown documents from a folder into the vector store
    *
