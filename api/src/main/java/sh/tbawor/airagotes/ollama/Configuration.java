@@ -30,15 +30,15 @@ public class Configuration {
     options.setModel("gemma3:4b");
     options.setTemperature(0.7);
 
-      return OllamaChatModel
-          .builder()
-          .ollamaApi(ollamaApi)
-          .defaultOptions(options).build();
+    return OllamaChatModel
+        .builder()
+        .ollamaApi(ollamaApi)
+        .defaultOptions(options).build();
 
   }
 
   @Bean
   public ChatClient chatClient(ChatModel chatModel) {
-   return ChatClient.create(chatModel) ;
+    return ChatClient.create(chatModel);
   }
 }

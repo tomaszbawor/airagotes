@@ -18,7 +18,8 @@ public class KnowledgebaseInitRunner implements ApplicationRunner {
   private final String notesFolder;
   private final DocumentIngestionService documentIngestionService;
 
-  public KnowledgebaseInitRunner(@Value("${knowledgebase.folder}") String notesFolder, DocumentIngestionService documentIngestionService) {
+  public KnowledgebaseInitRunner(@Value("${knowledgebase.folder}") String notesFolder,
+      DocumentIngestionService documentIngestionService) {
     this.notesFolder = notesFolder;
     this.documentIngestionService = documentIngestionService;
   }
