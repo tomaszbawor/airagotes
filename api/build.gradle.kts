@@ -29,6 +29,7 @@ dependencies {
     implementation("org.springframework.ai:spring-ai-starter-model-ollama")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jsoup:jsoup:1.19.1")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")

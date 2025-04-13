@@ -21,3 +21,10 @@ spring:
 knowledgebase:
   init: false
   folder: "/home/tomasz/Documents/ObsidianNotes"
+
+confluence:
+  scrap: false
+  url: "https://confluence.example.com"
+  email: ""
+  token: ""
+  cookie: ""

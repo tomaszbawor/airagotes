@@ -1,13 +1,13 @@
 services:
 
-  backend-api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - ollama-server
+ # backend-api:
+   # build:
+   #   context: ./api
+   #   dockerfile: dockerfile
+   # ports:
+   #   - "8080:8080"
+   #  depends_on:
+     # - ollama-server
 
   qdrant-db:
     image: qdrant/qdrant:v1.13.6
