@@ -18,4 +18,6 @@ spring:
       chat:
         options:
           model: gemma3:4b
-
+knowledgebase:
+  init: true
+  folder: "/home/tomasz/Documents/ObsidianNotes"
