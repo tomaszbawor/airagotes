@@ -28,7 +28,7 @@ public class Configuration {
   public OllamaChatModel chatModel(OllamaApi ollamaApi) {
     OllamaOptions options = new OllamaOptions();
     options.setModel("gemma3:4b");
-    options.setTemperature(0.7);
+    options.setTemperature(0.3); // Low Temperature to improve consistency and avoid hallucinations
 
     return OllamaChatModel
         .builder()
