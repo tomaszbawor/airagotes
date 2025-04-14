@@ -18,6 +18,9 @@ public class Configuration {
   @Value("${spring.ai.ollama.base-url}")
   public String ollamaUrl;
 
+  @Value("${spring.ai.ollama.chat.options.model}")
+  public String ollamaModel;
+
   @Bean
   public OllamaApi ollamaApi() {
     return new OllamaApi(ollamaUrl);
@@ -32,7 +35,7 @@ public class Configuration {
   @Bean
   public OllamaChatModel chatModel(OllamaApi ollamaApi) {
     OllamaOptions options = new OllamaOptions();
-    options.setModel("gemma3:4b");
+    options.setModel(ollamaModel);
     options.setTemperature(0.3); // Low Temperature to improve consistency and avoid hallucinations
 
     return OllamaChatModel

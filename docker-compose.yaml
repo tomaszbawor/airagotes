@@ -30,7 +30,7 @@ services:
     environment:
       # If you want to set GPU or other config
       # OLLAMA_CUDA: "1"
-      OLLAMA_MODEL: "gemma3:4b,nomic-embed-text:latest"
+      OLLAMA_MODEL: "gemma3:4b,nomic-embed-text:latest,gemma3:27b"
     volumes:
       - ./docker_data/ollama_models:/root/.ollama
       - ./docker/ollama-entrypoint.sh:/entrypoint.sh

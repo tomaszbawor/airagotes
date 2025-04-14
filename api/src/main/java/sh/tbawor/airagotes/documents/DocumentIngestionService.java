@@ -87,11 +87,10 @@ public class DocumentIngestionService {
 
     private List<File> findMarkdownFiles(File folder) {
         List<File> markdownFiles = new ArrayList<>();
-        try {
-            Files.walk(folder.toPath())
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.toString().toLowerCase().endsWith(".md"))
-                    .forEach(path -> markdownFiles.add(path.toFile()));
+        try (var paths = Files.walk(folder.toPath())) {
+            paths.filter(Files::isRegularFile)
+                 .filter(path -> path.toString().toLowerCase().endsWith(".md"))
+                 .forEach(path -> markdownFiles.add(path.toFile()));
         } catch (Exception e) {
             log.error("Error finding markdown files", e);
         }
