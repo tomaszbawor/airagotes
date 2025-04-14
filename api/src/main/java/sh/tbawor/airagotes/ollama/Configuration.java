@@ -42,7 +42,6 @@ public class Configuration {
         .builder()
         .ollamaApi(ollamaApi)
         .defaultOptions(options).build();
-
   }
 
   @Bean

@@ -7,6 +7,7 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.web.bind.annotation.*;
+
 import sh.tbawor.airagotes.documents.DocumentRepository;
 
 import java.util.List;
@@ -36,45 +37,49 @@ public class RagController {
   }
 
   @PostMapping("/query")
-  public Map<String, Object> query(@RequestBody QueryRequest request,
+  public QueryResponse query(@RequestBody QueryRequest request,
       @RequestParam(defaultValue = "10") int topK) {
 
-    // 1. Retrieve relevant documents from the vector store
+    // Retrieve relevant documents from the vector store
     List<Document> relevantDocs = documentRepository.similiaritySearchWithTopK(request.query(), topK);
 
-    // 2. Extract and format the document content for the prompt
+    // Extract and format the document content for the prompt
     String context = relevantDocs.stream()
         .map(Document::getFormattedContent)
         .reduce((a, b) -> a + "\n\n" + b)
         .orElse("No relevant information found.");
 
-    // 3. Create the system prompt with the context
     Message systemMessage = new SystemPromptTemplate(SYSTEM_PROMPT)
         .createMessage(Map.of("context", context));
-
-    // 4. Create the user message with the query
     Message userMessage = new UserMessage(request.query());
-
-    // 5. Create the prompt with both messages
     Prompt prompt = new Prompt(List.of(systemMessage, userMessage));
-
-    // 6. Generate the response
 
     var response = chatClient.prompt(prompt).call();
 
-    // 7. Return the response with some metadata
-    return Map.of(
-        "answer", response.chatResponse(),
-        "sourcesCount", relevantDocs.size(),
-        "sources", relevantDocs.stream()
-            .map(doc -> Map.of(
-                "content",
-                doc.getFormattedContent().substring(0, Math.min(doc.getFormattedContent().length(), 200)) + "...",
-                "metadata", doc.getMetadata()))
-            .toList());
+    var sources = relevantDocs.stream()
+        .map(document -> new Source(
+            document.getFormattedContent(),
+            document.getMetadata()))
+        .toList();
+
+    return new QueryResponse(
+        response.chatResponse().getResult().getOutput().getText(),
+        relevantDocs.size(),
+        sources);
   }
 
-  // Request record
+  public record QueryResponse(
+      String answer,
+      int sourcesCount,
+      List<Source> sources) {
+  }
+
+  record Source(
+      String content,
+      Map<String, Object> metadata) {
+  }
+
   public record QueryRequest(String query) {
   }
+
 }
