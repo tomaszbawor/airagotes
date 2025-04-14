@@ -27,7 +27,6 @@ public class ConfluenceClientConfig {
     @Value("${confluence.max-buffer-size:10485760}")
     private int maxBufferSize; // Default to 10MB
 
-
     @Bean
     public WebClient confluenceWebClient() {
         // Configure exchange strategies with increased buffer size

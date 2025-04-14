@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import sh.tbawor.airagotes.documents.DocumentIngestionService;
 
 @Component
-@ConditionalOnProperty(value = {"knowledgebase.init"}, havingValue = "true")
+@ConditionalOnProperty(value = { "knowledgebase.init" }, havingValue = "true")
 public class KnowledgebaseInitRunner implements ApplicationRunner {
 
     private static Logger log = LoggerFactory.getLogger(KnowledgebaseInitRunner.class);
@@ -19,7 +19,7 @@ public class KnowledgebaseInitRunner implements ApplicationRunner {
     private final DocumentIngestionService documentIngestionService;
 
     public KnowledgebaseInitRunner(@Value("${knowledgebase.folder}") String notesFolder,
-                                   DocumentIngestionService documentIngestionService) {
+            DocumentIngestionService documentIngestionService) {
         this.notesFolder = notesFolder;
         this.documentIngestionService = documentIngestionService;
     }

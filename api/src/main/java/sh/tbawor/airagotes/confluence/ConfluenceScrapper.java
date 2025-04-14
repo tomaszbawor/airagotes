@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@ConditionalOnProperty(value = {"confluence.scrap"}, havingValue = "true")
+@ConditionalOnProperty(value = { "confluence.scrap" }, havingValue = "true")
 public class ConfluenceScrapper implements ApplicationRunner {
     private static final Logger log = LoggerFactory.getLogger(ConfluenceScrapper.class);
 
@@ -25,7 +25,8 @@ public class ConfluenceScrapper implements ApplicationRunner {
     private final ConfluenceRestClient confluenceRestClient;
     private final DocumentIngestionService documentIngestionService;
 
-    public ConfluenceScrapper(ConfluenceRestClient confluenceRestClient, DocumentIngestionService documentIngestionService, @Value("${confluence.spaces}") String spaces) {
+    public ConfluenceScrapper(ConfluenceRestClient confluenceRestClient,
+            DocumentIngestionService documentIngestionService, @Value("${confluence.spaces}") String spaces) {
         this.confluenceRestClient = confluenceRestClient;
         this.documentIngestionService = documentIngestionService;
         this.spaces = List.of(spaces.split(","));

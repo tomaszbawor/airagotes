@@ -1,0 +1,68 @@
+# Top-most EditorConfig file
+root = true
+
+# Global default
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+#########################
+# Java
+[*.java]
+indent_style = space
+indent_size = 4
+continuation_indent_size = 8
+max_line_length = 120
+insert_final_newline = true
+
+#########################
+# Kotlin
+[*.kt]
+indent_style = space
+indent_size = 4
+continuation_indent_size = 4
+max_line_length = 100
+
+[*.kts]
+indent_style = space
+indent_size = 4
+
+#########################
+# TypeScript / JavaScript / JSX / TSX
+[*.{ts,tsx,js,jsx}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+insert_final_newline = true
+trim_trailing_whitespace = true
+quote_type = double
+curly_bracket_next_line = false
+
+#########################
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+#########################
+# YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+#########################
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+indent_style = space
+indent_size = 2
+
+#########################
+# XML (pom.xml etc.)
+[*.xml]
+indent_style = space
+indent_size = 2

@@ -18,7 +18,6 @@ public class DocumentRepository {
 
     public List<Document> similiaritySearchWithTopK(String prompt, int topK) {
         SearchRequest request = SearchRequest.builder().query(prompt).topK(topK).build();
-
         return vectorStore.similaritySearch(request);
     }
 
