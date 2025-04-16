@@ -14,7 +14,7 @@ import java.util.List;
  * Application service for document ingestion.
  * This service orchestrates the process of reading documents and storing them in the repository.
  */
-@Service
+@Service("applicationDocumentIngestionService")
 public class DocumentIngestionService {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentIngestionService.class);

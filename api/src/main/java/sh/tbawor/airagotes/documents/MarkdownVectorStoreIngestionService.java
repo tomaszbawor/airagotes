@@ -17,14 +17,14 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class DocumentIngestionService {
+@Service("documentsDocumentIngestionService")
+public class MarkdownVectorStoreIngestionService {
 
-  private static final Logger log = LoggerFactory.getLogger(DocumentIngestionService.class);
+  private static final Logger log = LoggerFactory.getLogger(MarkdownVectorStoreIngestionService.class);
 
   private final VectorStore vectorStore;
 
-  public DocumentIngestionService(VectorStore vectorStore) {
+  public MarkdownVectorStoreIngestionService(VectorStore vectorStore) {
     this.vectorStore = vectorStore;
   }
 

@@ -4,12 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import sh.tbawor.airagotes.documents.DocumentIngestionService;
+import sh.tbawor.airagotes.documents.MarkdownVectorStoreIngestionService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +24,11 @@ public class ConfluenceScrapper implements ApplicationRunner {
 
   private final List<String> spaces;
   private final ConfluenceRestClient confluenceRestClient;
-  private final DocumentIngestionService documentIngestionService;
+  private final MarkdownVectorStoreIngestionService documentIngestionService;
 
   public ConfluenceScrapper(ConfluenceRestClient confluenceRestClient,
-      DocumentIngestionService documentIngestionService, @Value("${confluence.spaces}") String spaces) {
+      @Qualifier("documentsDocumentIngestionService") MarkdownVectorStoreIngestionService documentIngestionService,
+      @Value("${confluence.spaces}") String spaces) {
     this.confluenceRestClient = confluenceRestClient;
     this.documentIngestionService = documentIngestionService;
     this.spaces = List.of(spaces.split(","));

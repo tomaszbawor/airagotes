@@ -3,6 +3,7 @@ package sh.tbawor.airagotes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,7 +25,7 @@ public class KnowledgebaseInitRunner implements ApplicationRunner {
 
   public KnowledgebaseInitRunner(
       @Value("${knowledgebase.folder}") String notesFolder,
-      DocumentIngestionService documentIngestionService,
+      @Qualifier("applicationDocumentIngestionService") DocumentIngestionService documentIngestionService,
       MarkdownFolderDocumentReaderFactory readerFactory) {
     this.notesFolder = notesFolder;
     this.documentIngestionService = documentIngestionService;
