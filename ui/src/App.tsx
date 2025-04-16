@@ -1,12 +1,10 @@
 import "./App.css";
-import { Button } from "./components/ui/button";
+import WebSearchInterface from "./components/WebSearchInterface";
 
 function App() {
   return (
     <>
-      <div className="p-2">
-        <Button>Click it</Button>
-      </div>
+      <WebSearchInterface />
     </>
   );
 }
