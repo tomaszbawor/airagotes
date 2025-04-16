@@ -1,4 +1,4 @@
-package sh.tbawor.airagotes.confluence;
+package sh.tbawor.airagotes.infrastructure.confluence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import sh.tbawor.airagotes.domain.model.ConfluencePage;
+import sh.tbawor.airagotes.domain.port.ConfluenceClient;
+
 @Component
-public class ConfluenceRestClient {
+public class ConfluenceRestClient implements ConfluenceClient {
 
   private final static Logger log = LoggerFactory.getLogger(ConfluenceRestClient.class);
 
@@ -21,6 +24,7 @@ public class ConfluenceRestClient {
     this.confluenceWebClient = confluenceWebClient;
   }
 
+  @Override
   public List<ConfluencePage> getPagesFromSpace(String spaceKey, int limit) {
     List<ConfluencePage> pages = new ArrayList<>();
     String nextUrl = "/rest/api/content?type=page&spaceKey=" + spaceKey + "&limit=" + limit + "&expand=body.view";

@@ -1,4 +1,4 @@
-package sh.tbawor.airagotes.confluence;
+package sh.tbawor.airagotes.application.confluence;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+
 import sh.tbawor.airagotes.documents.MarkdownVectorStoreIngestionService;
+import sh.tbawor.airagotes.domain.model.ConfluencePage;
+import sh.tbawor.airagotes.domain.port.ConfluenceClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,13 +26,13 @@ public class ConfluenceScrapper implements ApplicationRunner {
   private static final Logger log = LoggerFactory.getLogger(ConfluenceScrapper.class);
 
   private final List<String> spaces;
-  private final ConfluenceRestClient confluenceRestClient;
+  private final ConfluenceClient confluenceClient;
   private final MarkdownVectorStoreIngestionService documentIngestionService;
 
-  public ConfluenceScrapper(ConfluenceRestClient confluenceRestClient,
+  public ConfluenceScrapper(ConfluenceClient confluenceClient,
       @Qualifier("documentsDocumentIngestionService") MarkdownVectorStoreIngestionService documentIngestionService,
       @Value("${confluence.spaces}") String spaces) {
-    this.confluenceRestClient = confluenceRestClient;
+    this.confluenceClient = confluenceClient;
     this.documentIngestionService = documentIngestionService;
     this.spaces = List.of(spaces.split(","));
   }
@@ -39,7 +42,7 @@ public class ConfluenceScrapper implements ApplicationRunner {
     log.info("Starting Confluence scraping for spaces {}...", spaces);
 
     for (String space : spaces) {
-      var pages = confluenceRestClient.getPagesFromSpace(space, 10);
+      var pages = confluenceClient.getPagesFromSpace(space, 10);
 
       log.info("Retrieved {} Confluence pages. Processing for vector store...", pages.size());
       List<Document> documents = processConfluencePages(pages, space);
