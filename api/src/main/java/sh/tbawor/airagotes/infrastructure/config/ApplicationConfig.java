@@ -1,4 +1,4 @@
-package sh.tbawor.airagotes.ollama;
+package sh.tbawor.airagotes.infrastructure.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -9,17 +9,28 @@ import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaModel;
 import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@org.springframework.context.annotation.Configuration
-public class Configuration {
+import sh.tbawor.airagotes.domain.port.ChatService;
+import sh.tbawor.airagotes.domain.port.DocumentRepository;
+import sh.tbawor.airagotes.infrastructure.ai.OllamaChatService;
+import sh.tbawor.airagotes.infrastructure.persistence.VectorStoreDocumentRepository;
+
+/**
+ * Configuration for the application.
+ * This class configures the beans for the application, including the infrastructure adapters.
+ */
+@Configuration
+public class ApplicationConfig {
 
     @Value("${spring.ai.ollama.base-url}")
-    public String ollamaUrl;
+    private String ollamaUrl;
 
     @Value("${spring.ai.ollama.chat.options.model}")
-    public String ollamaModel;
+    private String ollamaModel;
 
     @Bean
     public OllamaApi ollamaApi() {
@@ -47,5 +58,15 @@ public class Configuration {
     @Bean
     public ChatClient chatClient(ChatModel chatModel) {
         return ChatClient.builder(chatModel).defaultAdvisors(new SimpleLoggerAdvisor()).build();
+    }
+
+    @Bean
+    public ChatService chatService(ChatClient chatClient) {
+        return new OllamaChatService(chatClient);
+    }
+
+    @Bean
+    public DocumentRepository documentRepository(VectorStore vectorStore) {
+        return new VectorStoreDocumentRepository(vectorStore);
     }
 }
