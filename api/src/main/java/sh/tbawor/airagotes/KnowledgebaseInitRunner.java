@@ -13,23 +13,23 @@ import sh.tbawor.airagotes.documents.DocumentIngestionService;
 @ConditionalOnProperty(value = { "knowledgebase.init" }, havingValue = "true")
 public class KnowledgebaseInitRunner implements ApplicationRunner {
 
-    private static Logger log = LoggerFactory.getLogger(KnowledgebaseInitRunner.class);
+  private static Logger log = LoggerFactory.getLogger(KnowledgebaseInitRunner.class);
 
-    private final String notesFolder;
-    private final DocumentIngestionService documentIngestionService;
+  private final String notesFolder;
+  private final DocumentIngestionService documentIngestionService;
 
-    public KnowledgebaseInitRunner(@Value("${knowledgebase.folder}") String notesFolder,
-            DocumentIngestionService documentIngestionService) {
-        this.notesFolder = notesFolder;
-        this.documentIngestionService = documentIngestionService;
-    }
+  public KnowledgebaseInitRunner(@Value("${knowledgebase.folder}") String notesFolder,
+      DocumentIngestionService documentIngestionService) {
+    this.notesFolder = notesFolder;
+    this.documentIngestionService = documentIngestionService;
+  }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.info("Initialising Knowledgebase from folder {}", this.notesFolder);
+  @Override
+  public void run(ApplicationArguments args) throws Exception {
+    log.info("Initialising Knowledgebase from folder {}", this.notesFolder);
 
-        int documentsIngested = documentIngestionService.ingestFolder(notesFolder);
-        log.info("Knowledgebase initialization complete. Ingested {} document chunks", documentsIngested);
-    }
+    int documentsIngested = documentIngestionService.ingestFolder(notesFolder);
+    log.info("Knowledgebase initialization complete. Ingested {} document chunks", documentsIngested);
+  }
 
 }
