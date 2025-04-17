@@ -1,4 +1,3 @@
-import React from 'react';
 import { Globe, Database } from 'lucide-react';
 import { CardFooter } from '../ui/card';
 import type { RagResponse } from '../../types/rag';

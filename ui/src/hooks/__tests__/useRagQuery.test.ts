@@ -38,7 +38,7 @@ describe('useRagQuery', () => {
 
     const { result } = renderHook(() => useRagQuery());
 
-    let promise: Promise<RagResponse | null>;
+    let promise: Promise<RagResponse | null> = Promise.resolve(null);
 
     act(() => {
       promise = result.current.executeQuery({
