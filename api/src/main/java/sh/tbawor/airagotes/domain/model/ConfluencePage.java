@@ -1,5 +1,8 @@
-package sh.tbawor.airagotes.confluence;
+package sh.tbawor.airagotes.domain.model;
 
+/**
+ * Represents a page from Confluence.
+ */
 public class ConfluencePage {
 
   private final String id;

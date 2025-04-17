@@ -1,4 +1,4 @@
-package sh.tbawor.airagotes.confluence;
+package sh.tbawor.airagotes.infrastructure.confluence;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
