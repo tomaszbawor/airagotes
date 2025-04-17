@@ -19,7 +19,7 @@ spring:
         options:
           model: gemma3:27b
 knowledgebase:
-  init: false
+  init: true
   folder: "/home/tomasz/Documents/ObsidianNotes"
 
 confluence:
