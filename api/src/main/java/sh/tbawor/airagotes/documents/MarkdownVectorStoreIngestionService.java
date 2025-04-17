@@ -3,14 +3,10 @@ package sh.tbawor.airagotes.documents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.document.DocumentReader;
-import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
-import org.springframework.ai.reader.markdown.config.MarkdownDocumentReaderConfig;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+
+import sh.tbawor.airagotes.infrastructure.file.MarkdownProcessor;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -23,9 +19,11 @@ public class MarkdownVectorStoreIngestionService {
   private static final Logger log = LoggerFactory.getLogger(MarkdownVectorStoreIngestionService.class);
 
   private final VectorStore vectorStore;
+  private final MarkdownProcessor markdownProcessor;
 
   public MarkdownVectorStoreIngestionService(VectorStore vectorStore) {
     this.vectorStore = vectorStore;
+    this.markdownProcessor = new MarkdownProcessor();
   }
 
   public void addDocumentsToVectorStore(List<Document> documents) {
@@ -60,16 +58,9 @@ public class MarkdownVectorStoreIngestionService {
 
     for (File file : markdownFiles) {
       try {
-        Resource resource = new FileSystemResource(file);
-        DocumentReader reader = new MarkdownDocumentReader(resource,
-            MarkdownDocumentReaderConfig.builder().build());
-        List<Document> docs = reader.get();
-
-        // Split documents into smaller chunks for better embedding
-        TokenTextSplitter splitter = new TokenTextSplitter();
-        List<Document> splitDocs = splitter.apply(docs);
-
-        documents.addAll(splitDocs);
+        // Process the file using the enhanced MarkdownProcessor
+        List<Document> processedDocs = markdownProcessor.processFile(file);
+        documents.addAll(processedDocs);
         log.debug("Processed file: {}", file.getPath());
       } catch (Exception e) {
         log.error("Error processing file: {}", file.getPath(), e);

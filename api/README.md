@@ -74,6 +74,38 @@ When adding new features to the application, follow the Onion Architecture appro
    - Business logic behavior
    - Architectural compliance using ArchUnit tests
 
+## Markdown Processing
+
+The application includes enhanced markdown processing capabilities for better embedding and retrieval:
+
+### Features
+
+1. **Improved Metadata Extraction**:
+   - Extracts titles from H1 headers or filenames
+   - Captures all headers for better context
+   - Identifies code blocks and other markdown elements
+   - Preserves file path and name information
+
+2. **Content Preprocessing**:
+   - Normalizes whitespace and line breaks
+   - Ensures proper formatting of headers
+   - Cleans and standardizes markdown content
+
+3. **Semantic Chunking**:
+   - Splits documents into manageable chunks
+   - Preserves context across chunks
+   - Optimizes for embedding and retrieval
+
+### Components
+
+- **MarkdownProcessor**: Core component that handles the enhanced processing of markdown files
+- **MarkdownFolderDocumentReader**: Reads markdown files from a folder using the enhanced processor
+- **MarkdownVectorStoreIngestionService**: Ingests processed markdown documents into the vector store
+
+### Usage
+
+The markdown processing is automatically used when ingesting documents through the `KnowledgebaseInitRunner` or when directly using the `MarkdownFolderDocumentReader` or `MarkdownVectorStoreIngestionService`.
+
 ## Testing
 
 The architecture is validated using ArchUnit tests in the `sh.tbawor.airagotes.architecture` package. These tests ensure that the codebase adheres to the Onion Architecture principles, including:

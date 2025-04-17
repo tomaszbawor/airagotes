@@ -2,9 +2,6 @@ package sh.tbawor.airagotes.infrastructure.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.reader.markdown.MarkdownDocumentReader;
-import org.springframework.ai.reader.markdown.config.MarkdownDocumentReaderConfig;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -20,15 +17,18 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the DocumentReader interface for reading markdown files from a folder.
  * This is an adapter in the hexagonal architecture that implements the port defined in the domain.
+ * Uses the MarkdownProcessor for enhanced embedding with improved metadata extraction and content preprocessing.
  */
 public class MarkdownFolderDocumentReader implements DocumentReader {
 
     private static final Logger log = LoggerFactory.getLogger(MarkdownFolderDocumentReader.class);
 
     private final String folderPath;
+    private final MarkdownProcessor markdownProcessor;
 
     public MarkdownFolderDocumentReader(String folderPath) {
         this.folderPath = folderPath;
+        this.markdownProcessor = new MarkdownProcessor();
     }
 
     @Override
@@ -48,16 +48,9 @@ public class MarkdownFolderDocumentReader implements DocumentReader {
 
         for (File file : markdownFiles) {
             try {
-                Resource resource = new FileSystemResource(file);
-                org.springframework.ai.document.DocumentReader springReader = new MarkdownDocumentReader(resource,
-                        MarkdownDocumentReaderConfig.builder().build());
-                List<org.springframework.ai.document.Document> docs = springReader.get();
-
-                // Split documents into smaller chunks for better embedding
-                TokenTextSplitter splitter = new TokenTextSplitter();
-                List<org.springframework.ai.document.Document> splitDocs = splitter.apply(docs);
-
-                springDocuments.addAll(splitDocs);
+                // Process the file using the enhanced MarkdownProcessor
+                List<org.springframework.ai.document.Document> processedDocs = markdownProcessor.processFile(file);
+                springDocuments.addAll(processedDocs);
                 log.debug("Processed file: {}", file.getPath());
             } catch (Exception e) {
                 log.error("Error processing file: {}", file.getPath(), e);
