@@ -17,7 +17,7 @@ repositories {
     mavenCentral()
 }
 
-extra["springAiVersion"] = "1.0.0-M7"
+extra["springAiVersion"] = "1.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -29,8 +29,8 @@ dependencies {
     implementation("org.springframework.ai:spring-ai-starter-model-ollama")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jsoup:jsoup:1.19.1")
-    implementation("io.vavr:vavr:0.10.5")
+    implementation("org.jsoup:jsoup:1.18.3")
+    implementation("io.vavr:vavr:0.10.6")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")

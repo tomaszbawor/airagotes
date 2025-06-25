@@ -11,6 +11,8 @@ import org.springframework.ai.ollama.api.OllamaModel;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
@@ -23,7 +25,16 @@ public class Configuration {
 
     @Bean
     public OllamaApi ollamaApi() {
-        return new OllamaApi(ollamaUrl);
+        // Spring AI 1.0.0 requires using the builder pattern
+        return OllamaApi.builder()
+                .baseUrl(ollamaUrl)
+                // Optional: customize RestClient if needed
+                .restClientBuilder(RestClient.builder())
+                // Optional: customize WebClient if needed (for streaming)
+                .webClientBuilder(WebClient.builder())
+                // Optional: add custom error handler if needed
+                // .responseErrorHandler(customErrorHandler)
+                .build();
     }
 
     @Bean
